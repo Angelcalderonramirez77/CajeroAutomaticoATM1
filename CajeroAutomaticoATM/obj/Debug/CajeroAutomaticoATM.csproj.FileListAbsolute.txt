@@ -1,0 +1,7 @@
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\bin\Debug\CajeroAutomaticoATM.exe.config
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\bin\Debug\CajeroAutomaticoATM.exe
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\bin\Debug\CajeroAutomaticoATM.pdb
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\obj\Debug\CajeroAutomaticoATM.csproj.AssemblyReference.cache
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\obj\Debug\CajeroAutomaticoATM.csproj.CoreCompileInputs.cache
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\obj\Debug\CajeroAutomaticoATM.exe
+C:\Users\angel\Desktop\Curso Desarrollo de aplicaciones\Labotorio\CajeroAutomaticoATM\CajeroAutomaticoATM\obj\Debug\CajeroAutomaticoATM.pdb
