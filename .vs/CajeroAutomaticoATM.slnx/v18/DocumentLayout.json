@@ -14,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 245,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -37,6 +37,10 @@
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
@@ -44,7 +48,7 @@
               "RelativeDocumentMoniker": "CajeroAutomaticoATM\\Program.cs",
               "ToolTip": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\Program.cs",
               "RelativeToolTip": "CajeroAutomaticoATM\\Program.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAwwH4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADoAAAAAAAAAAAAQwEwAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-24T15:59:20.113Z",
               "EditorCaption": ""

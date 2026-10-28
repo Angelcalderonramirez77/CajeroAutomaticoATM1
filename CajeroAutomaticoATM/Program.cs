@@ -13,7 +13,6 @@ namespace CajeroAutomaticoATM
         {
             int opciones = 0;
             decimal saldo = 1000m;
-            decimal limiteRetiro= 500m;
             bool cuentaActiva = true;
             string nombre = string.Empty;
             string cuenta = "100245 ";
