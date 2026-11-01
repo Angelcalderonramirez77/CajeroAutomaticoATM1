@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -11,124 +12,52 @@ namespace CajeroAutomaticoATM
     {
         static void Main(string[] args)
         {
-            int opciones = 0;
+            byte opciones = 0;
+            decimal retiro = 0m;
+            decimal deposito = 0m;
             decimal saldo = 1000m;
-            bool cuentaActiva = true;
             string nombre = string.Empty;
-            string cuenta = "100245 ";
-
             Console.WriteLine("================================");
             Console.WriteLine("     BIENVENIDO AL SISTEMA       ");
             Console.WriteLine("================================");
             // proceso Nombre
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("Ingrese su nombre por favor: ");
-            nombre = Console.ReadLine();
-            Console.Write("\n");
-            // ingrese su numero de cuenta
-            Console.Write("Ingrese su numero de cuenta por favor: ");
-            cuenta = Console.ReadLine();
-            Console.WriteLine("\n");
-
-            if (cuenta != "100245")
+            nombre = EntradaCliente();
+            bool estado = EstadoCuenta(true);
+            if (!estado)
             {
-                while (cuenta != "100245")
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Error: Numero de cuenta no activo.");
-                    Console.WriteLine("\n");
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.Write("Ingrese su numero de cuenta por favor: ");
-                    cuenta = Console.ReadLine();
-
-
-                }
+                Console.WriteLine("La cuenta está inactiva. No se puede realizar ninguna operación.");
             }
-            else 
-            { 
-
-                Console.WriteLine($"Numero de cuenta activo: {cuenta}");
+            else
+            {
+                Console.WriteLine($"Numero de cuenta activo: {estado}");
                 do
                 {
-                    Console.WriteLine("\n");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("================================");
-                    Console.WriteLine(" *******MENU PRINCIPAL**********");
-                    Console.WriteLine("1. Consultar Saldo");
-                    Console.WriteLine("2. Depositar");
-                    Console.WriteLine("3. Retirar");
-                    Console.WriteLine("4. Salir");
-                    Console.Write("Ingrese una Opcion: ");
-                    if (!int.TryParse(Console.ReadLine(), out opciones))
-                    {
-                        Console.WriteLine("Error: Por favor, ingrese un número válido.");
-                        continue;
-                    }
+                    MostrarMenu();
+                    byte opcion = LeerOpcion();
 
-                    switch (opciones)
+                    switch (opcion)
                     {
                         case 1:
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.WriteLine($"\nEl saldo Disponible es de RD${saldo:N2}");
+                            ConsultarSaldo(saldo);
 
                             break;
 
                         case 2:
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("\n Ingrese el Monto a depositar: ");
-                            decimal deposito;
-                            if (!decimal.TryParse(Console.ReadLine(), out deposito) || deposito <= 0)
+                            if(LeerMonto("Ingrese el monto a depositar: ", out decimal monto))
                             {
-                                Console.WriteLine("Error: Ingrese un monto válido mayor a 0.");
-                                break;
+                                saldo = Depositar(saldo, deposito);
                             }
-                            saldo += deposito;
-                            Console.WriteLine($"¡Depósito exitoso! Has sumado RD${deposito:N2} a tu cuenta ");
                             break;
-
-
                         case 3:
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.WriteLine("\n ===== RETIRO====");
-                            Console.Write("Ingrese el Monto a retirar: ");
-                            decimal retiro;
-                            if (!decimal.TryParse(Console.ReadLine(), out retiro)
-                                 || retiro <= 0)
+                            if (LeerMonto( "Ingrese el monto a retirar: ", out retiro))
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Ingrese un monto válido mayor que cero.");
+                                saldo = Retirar(saldo, retiro);
                                 break;
                             }
-                            if (!cuentaActiva)
-                            {
-                                Console.WriteLine("La cuenta está inactiva.");
-                            }
-                            else if (retiro > saldo)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Fondos insuficientes.");
-                                Console.WriteLine($"Saldo disponible: RD${saldo:N2}");
-                            }
-                            else
-                            {
-                                saldo -= retiro;
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("¡Retiro realizado exitosamente!");
-                                Console.WriteLine($"Monto retirado: RD${retiro:N2}");
-                                Console.WriteLine($"Nuevo saldo: RD${saldo:N2}");
-                            }
-
-                            break;
-
+                           break;
                         case 4:
                             // SALIR DEL SISTEMA
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                            Console.WriteLine("\n====================================");
-                            Console.WriteLine($"Gracias por utilizar nuestro cajero, {nombre}.");
-                            Console.WriteLine($"Numero de cuenta activo: {cuenta}");
-                            Console.WriteLine("¡Hasta pronto!");
-                            Console.WriteLine("====================================");
+                            Salidad(nombre);
                             break;
 
                         default:
@@ -136,15 +65,111 @@ namespace CajeroAutomaticoATM
                             Console.WriteLine("Opción incorrecta. Seleccione del 1 al 4.");
                             break;
                     }
-
-
-
-                } while (opciones != 4);
+                } while (opciones != 3);
 
                 Console.ResetColor();
-
-            } 
-
+            }
+        }
+        // Metodo para ingresar el nombre del cliente
+        public static string EntradaCliente()
+        {
+            string nombre;
+            Console.Write("Ingrese su nombre por favor: ");
+            nombre = Console.ReadLine();
+            Console.WriteLine("\n");
+            return nombre;
+        }
+        // Metodo para verificar el estado de la cuenta
+        public static bool EstadoCuenta(bool estado)
+        {
+            return true;
+        }
+        // Metodo para mostrar el menu de opciones
+        public static void MostrarMenu()
+        {
+            MensajeConsola("\n================================\n *******MENU PRINCIPAL**********" +
+                "\n1.Consultar Saldo\n2. Depositar\n3. Retirar\n4. Salir");
+        }
+        public static byte LeerOpcion()
+        {     
+            Console.Write("Ingrese una Opcion: ");
+            while (true)
+            {
+                if (byte.TryParse(Console.ReadLine(), out byte opciones))
+                {
+                    return opciones;
+                }
+                Console.Write(" Por favor, ingrese un número válido.");
+            }
+        }
+        private static void ConsultarSaldo(decimal saldo)
+        {
+            MensajeConsola($"\nEl saldo Disponible es de RD${saldo:N2}");
+        }
+        public static bool LeerMonto(string mensaje, out decimal monto)
+        {
+            Console.WriteLine("\n{0}", mensaje);
+            if (!decimal.TryParse(Console.ReadLine(), out monto) || monto <= 0m)
+            {
+                Console.WriteLine("Ingrese un monto válido mayor a 0. "); 
+                return false;
+            }
+            return true;
+        }
+        public static decimal Depositar(decimal saldo, decimal monto)
+        {
+            if (monto <0)
+            {
+                MensajeError(" El monto a depositar debe ser mayor a 0.");
+                return saldo;
+            }
+            else if (monto <= 1000000m)
+            {
+                MensajeError("Monto depositado fuera de lo normal");
+                MensajeConsola("Monto Validado son RD$ 50,000");
+                return saldo;
+            }
+            saldo += monto;
+            MensajeConsola($"\n¡Depósito exitoso!\nMonto depositado: RD${monto:N2}\nNuevo saldo: RD${saldo:N2}");
+            return saldo;
+        }
+        public static decimal Retirar(decimal saldo, decimal monto)
+        {
+            if (monto <= 0)
+            {
+                MensajeError(" El retiro debe ser debe der mayor a 0.");
+                return saldo;
+            }
+            else if (monto > saldo)
+            {
+                MensajeConsola($" Fondo insuficiente. \n Saldo disponible: RD${saldo:N2}");
+                return saldo;
+            }
+            else
+            {
+                saldo -= monto;
+                Console.ForegroundColor = ConsoleColor.Green;
+                MensajeConsola($"¡Retiro realizado exitosamente! \n Monto retirado: " +
+                    $"RD${monto:N2} \n Nuevo saldo: RD${saldo:N2}");
+            }
+            return saldo;   
+        }
+        public static string MensajeError(string mensaje)
+        {
+            Console.WriteLine($"Error: {mensaje}");
+            return mensaje;
+        }
+        public static string MensajeConsola(string imprimir)
+        {
+            Console.WriteLine($" {imprimir} ");
+            return imprimir;
+        }
+   
+        public static void Salidad(string nombre)
+        {
+            MensajeConsola("\n====================================");
+            MensajeConsola($"Gracias por utilizar nuestro cajero, {nombre}. \n ¡Hasta pronto!");
+            MensajeConsola("====================================");
         }
     }
 }
