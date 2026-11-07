@@ -8,3 +8,11 @@
 - mejerar la logica y hacer los comentario del proceso
 - subir el Pseint 
 - continuar con el desarrollo de las funcionalidades pendientes
+## Version MINI ATM V2 
+- Metodo registrar historial de transcaciones de entrada y salida
+- Metodo para capturar la transaciones de los depositos y retiros
+- Definicion de List<decimal> historialMovimientos 
+- arreglo en los deposito en la variables defininar en el out decimal deposito y decimal retiro
+- añadir el RegistrarMovimientos(historialMovimientos).Add(monto)
+- Mostrar con Colores si el monto es mayor que cero es deposito y si es menor que cero ratiro 
+- falto definir la cuenta inicial en 5000 mil para la proxima
