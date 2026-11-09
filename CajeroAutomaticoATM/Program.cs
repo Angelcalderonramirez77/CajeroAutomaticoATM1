@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using static CajeroAutomaticoATM.Program;
 
 namespace CajeroAutomaticoATM
 {
@@ -12,78 +13,171 @@ namespace CajeroAutomaticoATM
     {
         static void Main(string[] args)
         {
-            byte opciones = 0;
-            decimal saldo = 1000m;
-            string nombre = string.Empty;
-
-            List<decimal> historialMovimientos = new List<decimal>();
+            string nombre = "Angel Calderon Ramirez";
 
             Console.WriteLine("================================");
-            Console.WriteLine("            MINI ATM V2          ");
+            Console.WriteLine("            MINI ATM V2.1        ");
             Console.WriteLine("================================");
             // proceso Nombre
-            bool estado = EstadoCuenta(true);
-            if (!estado)
-            {
-                Console.WriteLine("La cuenta está inactiva. No se puede realizar ninguna operación.");
-            }
-            else
-            {
-                Console.WriteLine($"Numero de cuenta activo: {estado}");
-                do
-                {
-                    MostrarMenu();
-                    opciones = LeerOpcion();
 
-                    switch (opciones)
-                    {
-                        case 1:
-                            ConsultarSaldo(saldo);
+            List<Transaccion> historialMovimientos = new List<Transaccion>();            
 
-                            break;
-
-                        case 2:
-                            if(LeerMonto("Ingrese el monto a depositar: ", out decimal deposito))
-                            {
-                                saldo = Depositar(saldo, deposito, historialMovimientos);
-                            }
-                           
-                            break;
-                        case 3:
-                            if (LeerMonto( "Ingrese el monto a retirar: ", out decimal retiro))
-                            {
-                                saldo = Retirar(saldo, retiro, historialMovimientos);
-                                break;
-                            }
-                           break;
-                        case 4:
-                            MostrarMovimientos(historialMovimientos);
-
-                           break;
-                        case 5:
-                            Salidad(nombre);
-                            break;
-
-                        default:
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Opción incorrecta. Seleccione del 1 al 4.");
-                            break;
-                    }
-                } while (opciones != 5);
-
-                Console.ResetColor();
-            }
+            ATM.EjercutarOperacion(nombre, historialMovimientos);
         }
-         // === Futuras Mejoras ===//
+       public class ATM
+        {
+            public bool CuentaActiva { get; set; }
+            public ATM(bool cuentaActiva)
+            {
+                CuentaActiva = cuentaActiva;
+            }
+            public  void MostrarMenu()
+            {
+                Pantalla.MensajeConsola(
+                    "\n================================\n" +
+                    " *******MENU PRINCIPAL**********" +
+                    "\n1. Consultar Saldo" +
+                    "\n2. Depositar" +
+                    "\n3. Retirar" +
+                    "\n4. Consultar movimientos" +
+                    "\n5. Salir");
+            }
+            public static void EjercutarOperacion(string nombre, List<Transaccion> historialMovimientos)
+            {
+                Cuenta miCuenta = new Cuenta
+                {
+                    Activa = true,
+                    Saldo = 10000m
+                };
 
-        /*
+                bool cuentaActiva = miCuenta.EstadoCuenta();
+                if (!cuentaActiva)
+                {
+                    Console.WriteLine("La cuenta está inactiva. No se puede realizar ninguna operación.");
+                }
+                else
+                {
+                    Console.WriteLine($"Numero de cuenta activo: {cuentaActiva}");
+                    byte opciones;
+                    ATM menu = new ATM(cuentaActiva);
+
+                    do
+                    {
+                        menu.MostrarMenu();
+                        opciones = Teclado.LeerOpcion();
+
+                        switch (opciones)
+                        {                            
+                            case 1:
+
+                                Cuenta.ConsultarSaldo(miCuenta.Saldo);
+                                break;
+                            case 2:
+                                if (Teclado.LeerMonto("Ingrese el monto a depositar: ", out decimal deposito))
+                                {
+                                    miCuenta.Saldo = miCuenta.Depositar(miCuenta.Saldo,deposito, historialMovimientos);
+
+                                }
+                                break;
+
+                            case 3:
+                                Cuenta retirado = new Cuenta();
+
+                                if (Teclado.LeerMonto("Ingrese el monto a retirar: ", out decimal retiro))
+                                {
+                                    miCuenta.Saldo = miCuenta.Retirar(miCuenta.Saldo, retiro, historialMovimientos);
+                                }
+                                break;
+                            case 4:
+                                Transaccion.MostrarMovimientos(historialMovimientos);
+
+                                break;
+                            case 5:
+                                Pantalla.Salida(nombre);
+                                break;
+
+                            default:
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Opción incorrecta. Seleccione del 1 al 5.");
+                                Console.ResetColor();
+                                break;
+                        }
+                    } while (opciones != 5);
+
+                    Console.ResetColor();
+                }
+            } 
+
+        }
+
         // Clase para representar una cuenta bancaria
-        public class Cuenta {
+        public class Cuenta 
+        {
             
            public int NumeroCuenta { get; set; }
-           public decimal Saldo { get; set; }
+           public decimal Saldo { get; set ; }
            public bool Activa { get; set; }
 
+            // consurtal cuenta 
+            public  bool EstadoCuenta()
+            {
+                return Activa;
+            }
+            public static void ConsultarSaldo(decimal Saldo)
+            {
+                Console.WriteLine($"Su saldo actual es: RD${Saldo:N2}");
+            }
+            public  bool LeerMonto(string mensaje, out decimal monto)
+            {
+                Console.WriteLine("\n{0}", mensaje);
+                if (!decimal.TryParse(Console.ReadLine(), out monto) || monto <= 0m)
+                {
+                    Console.WriteLine("Ingrese un monto válido mayor a 0. ");
+                    return false;
+                }
+                return true;
+            }
+            // deposito
+            public  decimal Depositar(decimal saldo, decimal monto, List<Transaccion> historialMovimiento)
+            {
+                if (monto <= 0 || monto > 50000m)
+                {
+                    Pantalla.MensajeError(" Monto no permitido.");
+                    return saldo;
+                }
+                saldo += monto;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Pantalla.MensajeConsola($"\n¡Depósito exitoso!\nMonto depositado: RD${monto:N2}\nNuevo saldo: RD${saldo:N2}");
+
+                // Agregar el movimiento al historial
+                Transaccion.RegistrarMovimiento(historialMovimiento, monto);
+                Console.ResetColor();
+                return saldo;
+            }
+            // retirar 
+            public  decimal Retirar(decimal saldo, decimal monto,List<Transaccion> historialMovimientos)
+            {
+                if (monto <= 0)
+                {
+                    Pantalla.MensajeError(" El retiro debe ser debe der mayor a 0.");
+                    return saldo;
+                }
+                else if (monto > saldo)
+                {
+                    Pantalla.MensajeConsola($" Fondo insuficiente. \n Saldo disponible: RD${saldo:N2}");
+                    return saldo;
+                }
+                else
+                {
+                    saldo -= monto;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Pantalla.MensajeConsola($"¡Retiro realizado exitosamente! \n Monto retirado: " +
+                        $"RD${monto:N2} \n Nuevo saldo: RD${saldo:N2}");
+                }
+                Transaccion.RegistrarMovimiento(historialMovimientos, -monto);
+                Console.ResetColor();
+                return saldo;
+            }
         }
         // Clase para mostrar mensajes en la pantalla
         public class Pantalla
@@ -93,11 +187,26 @@ namespace CajeroAutomaticoATM
                 Console.WriteLine(mensaje);
                 return mensaje;
             }
-
             public string MostrarSaldo(decimal saldo)
             {
                 Console.WriteLine($"Su saldo actual es: RD${saldo:N2}");
                 return $"Su saldo actual es: RD${saldo:N2}";
+            }
+            public static string MensajeError(string mensaje)
+            {
+                Console.WriteLine($"Error: {mensaje}");
+                return mensaje;
+            }
+            public static string MensajeConsola(string imprimir)
+            {
+                Console.WriteLine($" {imprimir} ");
+                return imprimir;
+            }
+            public static void Salida(string nombre)
+            {
+                Pantalla.MensajeConsola("\n====================================");
+                Pantalla.MensajeConsola($"Gracias por utilizar nuestro cajero, {nombre}. \n ¡Hasta pronto!");
+                Pantalla.MensajeConsola("====================================");
             }
         }
          // CLASE entrada de datos 
@@ -137,153 +246,74 @@ namespace CajeroAutomaticoATM
             {
                 // Lógica para dispensar efectivo
             }
+
         }
-     
+
+
         public class Transaccion
         {
             public string Tipo { get; set; }
             public decimal Monto { get; set; }
-            public DateTime fecha { get; set; }
-         }
-        */
+            public DateTime Fecha { get; set; }
 
-        // VERSION 1  //
+            // Constructor
+            public Transaccion(string tipo, decimal monto)
+            {
+                Tipo = tipo;
+                Monto = monto;
+                Fecha = DateTime.Now;
+            }
 
-        // Metodo para verificar el estado de la cuenta
-        public static bool EstadoCuenta(bool estado)
-        {
-            return estado;
-        }
-        // Metodo para mostrar el menu de opciones
-        public static void MostrarMenu()
-        {
-            MensajeConsola("\n================================\n *******MENU PRINCIPAL**********" +
-                "\n1.Consultar Saldo\n2. Depositar\n3. Retirar\n4. Consultar movimientos\n5. Salir");
-        }
-        public static byte LeerOpcion()
-        {     
-            Console.Write("Ingrese una Opcion: ");
-            while (true)
+            // Registrar movimientos
+            public static void RegistrarMovimiento(
+                List<Transaccion> historialMovimientos,
+                decimal monto)
             {
-                if (byte.TryParse(Console.ReadLine(), out byte opciones))
-                {
-                    return opciones;
-                }
-                Console.Write(" Por favor, ingrese un número válido.");
-            }
-        }
-        public static void ConsultarSaldo(decimal saldo)
-        {
-            MensajeConsola($"\nEl saldo Disponible es de RD${saldo:N2}");
-        }
-        
-        public static bool LeerMonto(string mensaje, out decimal monto)
-        {
-            Console.WriteLine("\n{0}", mensaje);
-            if (!decimal.TryParse(Console.ReadLine(), out monto) || monto <= 0m)
-            {
-                Console.WriteLine("Ingrese un monto válido mayor a 0. "); 
-                return false;
-            }
-            return true;
-        }
-        public static decimal Depositar(decimal saldo, decimal monto, List<decimal> historialMovimientos)
-        {
-            if (monto <= 0)
-            {
-                MensajeError(" El monto a depositar debe ser mayor a 0.");
-                return saldo;
-            }
-            else if (monto > 50000m)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                MensajeError("Monto depositado fuera de lo normal");
-                MensajeConsola("Monto Validado son RD$ 50,000");
-                Console.ResetColor();
-                return saldo;
-            }
-            saldo += monto;
-            Console.ForegroundColor = ConsoleColor.Green;
-            MensajeConsola($"\n¡Depósito exitoso!\nMonto depositado: RD${monto:N2}\nNuevo saldo: RD${saldo:N2}");
+                string tipo = monto >= 0 ? "Deposito" : "Retiro";
 
-            // Agregar el movimiento al historial
-            RegistrarMovimiento(historialMovimientos, monto);
-            Console.ResetColor();
-            return saldo;
-        }
-        public static decimal Retirar(decimal saldo, decimal monto, List<decimal> historialMovimientos)
-        {
-            if (monto <= 0)
-            {
-                MensajeError(" El retiro debe ser debe der mayor a 0.");
-                return saldo;
+                historialMovimientos.Add(
+                    new Transaccion(tipo, Math.Abs(monto))
+                );
             }
-            else if (monto > saldo)
-            {
-                MensajeConsola($" Fondo insuficiente. \n Saldo disponible: RD${saldo:N2}");
-                return saldo;
-            }
-            else
-            {
-                saldo -= monto;
-                Console.ForegroundColor = ConsoleColor.Red;
-                MensajeConsola($"¡Retiro realizado exitosamente! \n Monto retirado: " +
-                    $"RD${monto:N2} \n Nuevo saldo: RD${saldo:N2}");
-            }
-            RegistrarMovimiento(historialMovimientos, -monto);
-            Console.ResetColor();
-            return saldo;   
-        }
-        public static string MensajeError(string mensaje)
-        {
-            Console.WriteLine($"Error: {mensaje}");
-            return mensaje;
-        }
-        public static string MensajeConsola(string imprimir)
-        {
-            Console.WriteLine($" {imprimir} ");
-            return imprimir;
-        }
-   
-        public static void Salidad(string nombre)
-        {
-            MensajeConsola("\n====================================");
-            MensajeConsola($"Gracias por utilizar nuestro cajero, {nombre}. \n ¡Hasta pronto!");
-            MensajeConsola("====================================");
-        }
-        // Version 2 Agregando Listado A la Nueva Version //
 
-        public static void RegistrarMovimiento(List<decimal> historialMovimientos, decimal monto)
-        {   
-            historialMovimientos.Add(monto);
-
-        }
-
-        public static void MostrarMovimientos(List<decimal> historialMovimientos)
-        {
-            Console.WriteLine("\n Movimientos registrados");
-            Console.WriteLine("==============================");
-            foreach (var movimiento in historialMovimientos)
+            // Metodo solicitado por el profesor
+            public void MostrarDetalle()
             {
-                if (movimiento > 0)
+                if (Tipo == "Deposito")
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($" Retiro: RD${(movimiento):N2}");
-                    Console.ResetColor();
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($" Deposito: RD${(movimiento):N2}");
-                   
-
                 }
-                Console.ResetColor();
 
+                Console.WriteLine(
+                    $"[{Fecha:dd/MM/yyyy HH:mm}] " +
+                    $"{Tipo}: RD${Monto:N2}"
+                );
+
+                Console.ResetColor();
             }
 
+            // Mostrar historial completo
+            public static void MostrarMovimientos(
+                List<Transaccion> historialMovimientos)
+            {
+                Console.WriteLine("\nMOVIMIENTOS REGISTRADOS");
+                Console.WriteLine("==============================");
 
+                if (historialMovimientos.Count == 0)
+                {
+                    Console.WriteLine("No hay movimientos registrados.");
+                    return;
+                }
+
+                foreach (Transaccion movimiento in historialMovimientos)
+                {
+                    movimiento.MostrarDetalle();
+                }
+            }
         }
-
     }
 }
