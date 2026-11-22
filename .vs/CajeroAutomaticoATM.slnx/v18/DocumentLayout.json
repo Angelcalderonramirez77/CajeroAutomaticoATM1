@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|c:\\users\\angel\\desktop\\curso desarrollo de aplicaciones\\labotorio\\cajeroautomaticoatm\\cajeroautomaticoatm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\cajeroautomaticoatm\\cuenta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|solutionrelative:cajeroautomaticoatm\\cuenta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\cajeroautomaticoatm\\atm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|solutionrelative:cajeroautomaticoatm\\atm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\cajeroautomaticoatm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|solutionrelative:cajeroautomaticoatm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\cajeroautomaticoatm\\dispensadorefectivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3FB9D3F-4EF4-4A8A-A659-56C42F119F4D}|CajeroAutomaticoATM\\CajeroAutomaticoATM.csproj|solutionrelative:cajeroautomaticoatm\\dispensadorefectivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 245,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,16 +54,56 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "DispensadorEfectivo.cs",
+              "DocumentMoniker": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\DispensadorEfectivo.cs",
+              "RelativeDocumentMoniker": "CajeroAutomaticoATM\\DispensadorEfectivo.cs",
+              "ToolTip": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\DispensadorEfectivo.cs",
+              "RelativeToolTip": "CajeroAutomaticoATM\\DispensadorEfectivo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-14T01:57:41.308Z",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\Program.cs",
               "RelativeDocumentMoniker": "CajeroAutomaticoATM\\Program.cs",
               "ToolTip": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\Program.cs",
               "RelativeToolTip": "CajeroAutomaticoATM\\Program.cs",
-              "ViewState": "AgIAAFAAAAAAAAAAAAAswF0AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwCQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-24T15:59:20.113Z",
-              "EditorCaption": ""
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ATM.cs",
+              "DocumentMoniker": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\ATM.cs",
+              "RelativeDocumentMoniker": "CajeroAutomaticoATM\\ATM.cs",
+              "ToolTip": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\ATM.cs",
+              "RelativeToolTip": "CajeroAutomaticoATM\\ATM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-14T01:20:31.848Z",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Cuenta.cs",
+              "DocumentMoniker": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\Cuenta.cs",
+              "RelativeDocumentMoniker": "CajeroAutomaticoATM\\Cuenta.cs",
+              "ToolTip": "C:\\Users\\angel\\Desktop\\Curso Desarrollo de aplicaciones\\Labotorio\\CajeroAutomaticoATM\\CajeroAutomaticoATM\\Cuenta.cs",
+              "RelativeToolTip": "CajeroAutomaticoATM\\Cuenta.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-14T01:08:48.646Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
             }
           ]
         },
